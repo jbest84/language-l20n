@@ -10,9 +10,11 @@
     'end': '\\*/'
   }
   {
-    'name': 'entity.name.type'
-    'begin': '<(\\w)+'
+    'name': 'entity.name.section'
+    'begin': '<(\\w+)'
     'end': '>'
+    'captures':
+      1: 'name': 'entity.name.tag'
     'patterns': [
       {
         'include': '#strings'
