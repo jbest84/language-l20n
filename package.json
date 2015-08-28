@@ -1,0 +1,15 @@
+{
+  "name": "language-l20n",
+  "version": "0.1.0",
+  "description": "L20n Syntax",
+  "keywords": [
+    "l20n"
+  ],
+  "repository": "https://github.com/jbest84/language-l20n",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+  }
+}

@@ -1,0 +1,36 @@
+'scopeName': 'source.l20n'
+'name': 'L20n'
+'fileTypes': [
+  'l20n'
+]
+'patterns': [
+  {
+    'name': 'comment.block'
+    'begin': '/\\*'
+    'end': '\\*/'
+  }
+  {
+    'name': 'entity.name.type'
+    'begin': '<(\\w)+'
+    'end': '>'
+    'patterns': [
+      {
+        'include': '#strings'
+      }
+    ]
+  }
+]
+'repository':
+  'strings':
+    'patterns': [
+      {
+        'name': 'string.quoted.triple'
+        'begin': '"""'
+        'end': '"""'
+      }
+      {
+        'name': 'string.quoted'
+        'begin': '("|\')'
+        'end': '("|\')'
+      }
+    ]

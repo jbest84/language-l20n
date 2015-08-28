@@ -1,0 +1,140 @@
+/* Simple entity with a string value */
+<l20n "L20n">
+
+/* Reference to an entity */
+<welcome "Welcome to {{ l20n }}!">
+
+/* Multiline string */
+<desc """
+  {{ l20n }} is a domain-specific programming language
+  designed for localization.  Easy things are easy,
+  and complex things are possible.
+""">
+
+/* Hash value which doesn't `getString()` gracefully,
+ * but is nevertheless valid.  Hence the IndexError.
+ */
+<name {
+  short: "{{ l20n }}",
+  long: "Localization 2.0"
+}>
+
+/* Reference to a member value of a hash */
+<about "{{ name.short }} stands for {{ name.long }}">
+
+/* Better hash value with a default index */
+<betterName["short"] {
+  short: "{{ l20n }}",
+  long: "Localization 2.0"
+}>
+
+/* Shortcut notation for a default index: a catch-all member (*) */
+<evenBetterName {
+ *short: "{{ l20n }}",
+  long: "Localization 2.0"
+}>
+
+/* `evenBetterName` is now the same as `evenBetterName.short` */
+<betterAbout """
+  {{ evenBetterName }} stands for {{ evenBetterName.long }}.
+""">
+
+/* Attributes store meta-information describing the entity.
+ * Note that they're different from hash value's members
+ * (`short` and `long`).
+ */
+<tinker {
+ *short: "Tinker",
+  long: "L20n tinker"
+ }
+ version: "testing"
+>
+
+/* Access attributes with the double-colon notation.
+ * You can still use the single-dot notation to
+ * access hash members.
+ */
+<colophon[tinker::version] {
+  production: "{{ tinker.long }} is stable.  There are no bugs!",
+  testing: "{{ tinker.long }} is still in development.  Expect bugs."
+}>
+
+/* Reference to a developer-provided variable */
+<messages "Messages from {{ $new.fromUser.name }}">
+
+/* Use a variable in the index */
+<notify[$new.fromUser.gender] {
+  masculine: "He sent you {{ $new.msgs }} new message(s).",
+  feminine: "She sent you {{ $new.msgs }} new message(s).",
+ *unknown: "{{ $new.msgs }} new messages(s)."
+}>
+
+/* Macro and a macro call to which a variable is passed */
+<plural($n) { $n == 0 ? "zero" :
+                $n == 1 ? "one" : "many" }>
+<betterNotify[plural($new.msgs), $new.fromUser.gender] {
+  zero: "No new messages.",
+  one: {
+    masculine: "He sent you one message.",
+    feminine: "She sent you one message.",
+   *unknown: "One new message."
+  },
+  many: {
+    masculine: "He sent you {{ $new.msgs }} messages.",
+    feminine: "She sent you {{ $new.msgs }} messages.",
+   *unknown: "{{ $new.msgs }} new messages."
+  }
+}>
+
+/* Simple global */
+<yourOS "Your OS is {{ @os }}.">
+
+/* Hash value using a global in the index */
+<options[@os] {
+  win: "Settings",
+  linux: "Preferences",
+  mac: "Preferences"
+}>
+
+/* Same as above but with a catch-all for Unix-like systems */
+<betterOptions[@os] {
+  win: "Settings",
+ *nix: "Preferences"
+}>
+
+/* Macro and a macro call to which a global is passed */
+<timeOfDay($h) { $h < 6 ? "night" :
+                   $h < 12 ? "morning" :
+                     $h < 18 ? "afternoon" :
+                       "evening" }>
+<greeting[timeOfDay(@hour)] {
+  morning: "Good morning!",
+  afternoon: "Good afternoon!",
+  evening: "Good evening!",
+ *other: "O hai!"
+}>
+
+/* Responsive localization
+ * =======================
+ * Resize the browser window or use the Responsive Design View
+ * to see how the value of the `data` string changes.
+ */
+
+/* Define a macro which returns a human-readable label
+ * for the current screen width.
+ */
+<formFactor($n) { $n.px < 480 ? "portraitPhone" :
+                    $n.px < 768 ? "landscapePhone" :
+                      $n.px < 980 ? "landscapeTablet" :
+                        $n.px < 1200 ? "desktop" :
+                          "large" }>
+
+/* Call the `formFactor` macro passing the global `@screen` object.
+ * Note how the asterisk denotes the catch-all for macro return
+ * values that are not explicitly defined in the hash table.
+ */
+<data[formFactor(@screen.width)] {
+ *wide: "Data Connection Settings",
+  landscapePhone: "Data Settings",
+  portraitPhone: "Data"
+}>
