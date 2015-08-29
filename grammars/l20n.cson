@@ -10,7 +10,7 @@
     'end': '\\*/'
   }
   {
-    'name': 'entity.name.section'
+    'name': 'puncuation.definition.tag'
     'begin': '<(\\w+)'
     'end': '>'
     'captures':
@@ -18,6 +18,9 @@
     'patterns': [
       {
         'include': '#strings'
+      }
+      {
+        'include': '#dictionaries'
       }
     ]
   }
@@ -29,10 +32,53 @@
         'name': 'string.quoted.triple'
         'begin': '"""'
         'end': '"""'
+        'patterns': [
+          {
+            'include': '#interpolation'
+          }
+        ]
       }
       {
         'name': 'string.quoted'
         'begin': '("|\')'
         'end': '("|\')'
+        'patterns': [
+          {
+            'include': '#interpolation'
+          }
+        ]
+      }
+    ]
+  'interpolation':
+    'patterns': [
+      {
+        'name': 'string.regexp'
+        'begin': '{{'
+        'end': '}}'
+      }
+    ]
+  'dictionaries':
+    'patterns': [
+      {
+        'name': 'variable'
+        'begin': '[^{]{[^}]'
+        'end': '}'
+        'patterns': [
+          {
+            'include': '#strings'
+          }
+          {
+            'name': 'dictionary.value'
+            'begin': '([\\*]?\\w+):'
+            'end': '\\n'
+            'captures':
+              1: 'name': 'meta.tag'
+            'patterns': [
+              {
+                'include': '#strings'
+              }
+            ]
+          }
+        ]
       }
     ]
