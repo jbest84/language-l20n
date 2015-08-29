@@ -68,7 +68,6 @@
   'dictionaries':
     'patterns': [
       {
-        'name': 'variable'
         'begin': '([^{]{[^}])'
         'end': '(})'
         'beginCaptures':
