@@ -10,7 +10,7 @@
     'end': '\\*/'
   }
   {
-    'name': 'puncuation.definition.tag'
+    'name': 'punctuation.definition.tag'
     'begin': '<(\\w+)'
     'end': '>'
     'captures':
@@ -61,21 +61,29 @@
     'patterns': [
       {
         'name': 'variable'
-        'begin': '[^{]{[^}]'
-        'end': '}'
+        'begin': '([^{]{[^}])'
+        'end': '(})'
+        'beginCaptures':
+          1: 'name': 'meta.tag'
+        'endCaptures':
+          1: 'name': 'meta.tag'
         'patterns': [
           {
             'include': '#strings'
           }
           {
-            'name': 'dictionary.value'
-            'begin': '([\\*]?\\w+):'
+            'name': 'dictionary.kv'
+            'begin': '(\\*+\\w+)|([^*]\\w+):'
             'end': '\\n'
             'captures':
-              1: 'name': 'meta.tag'
+              1: 'name': 'punctuation.definition.bold'
+              2: 'name': 'meta.tag'
             'patterns': [
               {
                 'include': '#strings'
+              }
+              {
+                'include': '$self'
               }
             ]
           }
