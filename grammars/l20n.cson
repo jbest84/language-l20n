@@ -39,10 +39,26 @@
         ]
       }
       {
-        'name': 'string.quoted'
-        'begin': '("|\')'
-        'end': '("|\')'
+        'name': 'string.quoted.double'
+        'begin': '"'
+        'end': '"'
         'patterns': [
+          {
+            'match': '\\\\"'
+          }
+          {
+            'include': '#interpolation'
+          }
+        ]
+      }
+      {
+        'name': 'string.quoted.single'
+        'begin': '\''
+        'end': '\''
+        'patterns': [
+          {
+            'match': '\\\\\''
+          }
           {
             'include': '#interpolation'
           }
